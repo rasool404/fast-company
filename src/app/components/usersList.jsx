@@ -7,6 +7,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import Search from "./search";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
@@ -14,9 +15,15 @@ const UsersList = () => {
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
+    const [state, setState] = useState([]);
+
     const [users, setUsers] = useState();
+
     useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
+        api.users.fetchAll().then((data) => {
+            setState(data);
+            setUsers(data);
+        });
     }, []);
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
@@ -70,6 +77,19 @@ const UsersList = () => {
             setSelectedProf();
         };
 
+        const handleSearch = (value) => {
+            if (value) {
+                setUsers(
+                    users.filter((user) =>
+                        user.name.toLowerCase().includes(value.toLowerCase())
+                    )
+                );
+            } else {
+                setUsers(state);
+            }
+        };
+        console.log(state);
+
         return (
             <div className="d-flex">
                 {professions && (
@@ -90,6 +110,7 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <Search handleSearch={handleSearch} />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
