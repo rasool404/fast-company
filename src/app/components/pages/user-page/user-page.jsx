@@ -17,7 +17,7 @@ const UserPage = ({ userId }) => {
 
   if (user) {
     return (
-      <div>
+      <div className="col-md-6 mx-auto text-center">
         <h1>{user.name}</h1>
         <h2>Профессия: {user.profession.name}</h2>
         <Qualities qualities={user.qualities} />
@@ -29,7 +29,17 @@ const UserPage = ({ userId }) => {
       </div>
     );
   } else {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="d-flex justify-content-center my-5">
+        <div
+          className="spinner-border"
+          style={{ width: "5rem", height: "5rem" }}
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 };
 

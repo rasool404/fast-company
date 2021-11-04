@@ -90,7 +90,7 @@ const UsersListPage = () => {
     };
 
     return (
-      <div className="col-lg-8 mx-auto p-3 py-md-5 d-flex">
+      <div className="col-lg-8 mx-auto p-3 py-5 d-flex">
         {professions && (
           <div className="d-flex flex-column flex-shrink-0 me-3">
             <GroupList
@@ -131,7 +131,13 @@ const UsersListPage = () => {
       </div>
     );
   }
-  return <div>Loading...</div>;
+  return (
+    <div className="d-flex justify-content-center my-5">
+      <div className="spinner-border" style={{ width: "5rem", height: "5rem" }} role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
 };
 
 UsersListPage.propTypes = {
