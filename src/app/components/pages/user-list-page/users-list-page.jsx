@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import api from "../../../api";
-import { paginate } from "../../../../utils/paginate";
+import { paginate } from "../../../utils/paginate";
 import PropTypes from "prop-types";
 import Pagination from "../../common/pagintation";
 import GroupList from "../../common/group-list";
