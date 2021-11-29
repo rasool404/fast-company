@@ -1,6 +1,6 @@
 import Table from "./table";
-import TableBody from "./table-body";
-import TableHeader from "./table-header";
-
+import TableBody from "./tableBody";
+import TableHeader from "./tableHeader";
 export default Table;
+
 export { TableBody, TableHeader };

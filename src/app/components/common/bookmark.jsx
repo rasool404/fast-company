@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-const Bookmark = ({ status, ...rest }) => {
-  return (
-    <span className="d-block text-center text-danger" role="button" {...rest}>
-      <i className={`bi bi-bookmark${status ? "-fill" : ""} fs-4`}></i>
-    </span>
-  );
+const BookMark = ({ status, ...rest }) => {
+    return (
+        <button {...rest} className="btn btn-warning">
+            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+        </button>
+    );
+};
+BookMark.propTypes = {
+    status: PropTypes.bool
 };
 
-Bookmark.propTypes = {
-  status: PropTypes.bool
-};
-
-export default Bookmark;
+export default BookMark;
