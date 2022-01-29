@@ -3,20 +3,19 @@ import PropTypes from "prop-types";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const getInputClasses = () => {
-        return "form-control " + (error ? "is-invalid" : "");
-    };
 
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
-
-    const togglePassword = () => {
+    const getInputClasses = () => {
+        return "form-control" + (error ? " is-invalid" : "");
+    };
+    const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState);
     };
     return (
         <div className="mb-4">
-            <label htmlFor={name}>{label}</label>
+            <label htmlFor={name}> {label}</label>
             <div className="input-group has-validation">
                 <input
                     type={showPassword ? "text" : type}
@@ -26,11 +25,12 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     onChange={handleChange}
                     className={getInputClasses()}
                 />
+
                 {type === "password" && (
                     <button
-                        className="btn btn-ounline-secondary"
+                        className="btn btn-outline-secondary"
                         type="button"
-                        onClick={togglePassword}
+                        onClick={toggleShowPassword}
                     >
                         <i
                             className={
@@ -39,7 +39,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                         ></i>
                     </button>
                 )}
-                {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="invalid-feedback ">{error}</div>}
             </div>
         </div>
     );

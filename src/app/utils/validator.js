@@ -6,14 +6,11 @@ export function validator(data, config) {
             case "isRequired": {
                 if (typeof data === "boolean") {
                     statusValidate = !data;
-                } else if (typeof data === "object") {
-                    statusValidate = !Object.keys(data).length === 0;
                 } else {
                     statusValidate = data.trim() === "";
                 }
                 break;
             }
-
             case "isEmail": {
                 const emailRegExp = /^\S+@\S+\.\S+$/g;
                 statusValidate = !emailRegExp.test(data);
@@ -38,7 +35,6 @@ export function validator(data, config) {
         }
         if (statusValidate) return config.message;
     }
-
     for (const fieldName in data) {
         for (const validateMethod in config[fieldName]) {
             const error = validate(
@@ -51,6 +47,5 @@ export function validator(data, config) {
             }
         }
     }
-
     return errors;
 }

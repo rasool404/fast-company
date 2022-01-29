@@ -1,13 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SelectField = ({ label, onChange, defaultOption, options, error }) => {
-    const getInputClasses = () => {
-        return "form-select " + (error ? "is-invalid" : "");
-    };
-
+const SelectField = ({
+    label,
+    value,
+    onChange,
+    defaultOption,
+    options,
+    error,
+    name
+}) => {
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
+    };
+    const getInputClasses = () => {
+        return "form-select" + (error ? " is-invalid" : "");
     };
 
     const optionsArray =
@@ -26,17 +33,12 @@ const SelectField = ({ label, onChange, defaultOption, options, error }) => {
             <select
                 className={getInputClasses()}
                 id="validationCustom04"
-                name="profession"
-                value={defaultOption}
+                name={name}
+                value={value}
                 onChange={handleChange}
             >
-                <option disabled value={defaultOption}>
-                    {optionsArray &&
-                        [
-                            optionsArray.find((option) => {
-                                return option.value === defaultOption;
-                            })
-                        ][0].name}
+                <option disabled value="">
+                    {defaultOption}
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
@@ -49,17 +51,14 @@ const SelectField = ({ label, onChange, defaultOption, options, error }) => {
         </div>
     );
 };
-
 SelectField.propTypes = {
-    defaultOption: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.array,
-        PropTypes.string
-    ]),
+    defaultOption: PropTypes.string,
     label: PropTypes.string,
+    value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string,
-    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    name: PropTypes.string
 };
 
 export default SelectField;

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import TextField from "../common/form/textField";
+import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
-import RegisterSelector from "../common/form/registerSelector";
+import TextField from "../common/form/textField";
 import api from "../../api";
-import RadioField from "../common/form/radioField";
+import SelectField from "../common/form/selectField";
+import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 
@@ -16,61 +16,63 @@ const RegisterForm = () => {
         qualities: [],
         licence: false
     });
-    const [errors, setErrors] = useState({});
-    const [professions, setProfession] = useState();
     const [qualities, setQualities] = useState({});
+    const [professions, setProfession] = useState([]);
+    const [errors, setErrors] = useState({});
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
         api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
-
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
     };
-
-    const validatorConfig = {
+    const validatorConfog = {
         email: {
-            isRequired: { message: "Почта обязательна для заполнения!" },
-            isEmail: { message: "Email введен некорректно!" }
+            isRequired: {
+                message: "Электронная почта обязательна для заполнения"
+            },
+            isEmail: {
+                message: "Email введен некорректно"
+            }
         },
         password: {
-            isRequired: { message: "Пароль обязательна для заполнения!" },
+            isRequired: {
+                message: "Пароль обязательна для заполнения"
+            },
             isCapitalSymbol: {
-                message:
-                    "Пароль должен содержать как минимум 1 заглавную букву!"
+                message: "Пароль должен содержать хотя бы одну заглавную букву"
             },
             isContainDigit: {
-                message: "Пароль должен содержать минимум 1 число!"
+                message: "Пароль должен содержать хотя бы одно число"
             },
             min: {
-                message: "Пароль должен состоять минимум из 8 символов!",
+                message: "Пароль должен состаять миниму из 8 символов",
                 value: 8
             }
         },
         profession: {
-            isRequired: { message: "Обзятельно выбериту вашу профессию!" }
+            isRequired: {
+                message: "Обязательно выберите вашу профессию"
+            }
         },
         licence: {
             isRequired: {
                 message:
-                    "Вы не можете пользоваться нашим сервисом без лицензионного соглашения"
+                    "Вы не можете использовать наш сервис без подтреврждения лицензионного соглашения"
             }
         }
     };
-
     useEffect(() => {
         validate();
     }, [data]);
-
     const validate = () => {
-        const errors = validator(data, validatorConfig);
+        const errors = validator(data, validatorConfog);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
-
     const isValid = Object.keys(errors).length === 0;
 
     const handleSubmit = (e) => {
@@ -79,11 +81,10 @@ const RegisterForm = () => {
         if (!isValid) return;
         console.log(data);
     };
-
     return (
         <form onSubmit={handleSubmit}>
             <TextField
-                label="Почта"
+                label="Электронная почта"
                 name="email"
                 value={data.email}
                 onChange={handleChange}
@@ -97,19 +98,20 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
-            <RegisterSelector
-                onChange={handleChange}
-                options={professions}
+            <SelectField
+                label="Выбери свою профессию"
                 defaultOption="Choose..."
+                name="profession"
+                options={professions}
+                onChange={handleChange}
                 value={data.profession}
-                label="Выберите вашу профессию!"
                 error={errors.profession}
             />
             <RadioField
                 options={[
                     { name: "Male", value: "male" },
                     { name: "Female", value: "female" },
-                    { name: "Others", value: "others" }
+                    { name: "Other", value: "other" }
                 ]}
                 value={data.sex}
                 name="sex"
@@ -120,7 +122,7 @@ const RegisterForm = () => {
                 options={qualities}
                 onChange={handleChange}
                 name="qualities"
-                label="Выберите ваши качества"
+                label="Выберите ваши качесвта"
             />
             <CheckBoxField
                 value={data.licence}
@@ -131,6 +133,7 @@ const RegisterForm = () => {
                 Подтвердить <a>лицензионное соглашение</a>
             </CheckBoxField>
             <button
+                type="submit"
                 disabled={!isValid}
                 className="btn btn-primary w-100 mx-auto"
             >
