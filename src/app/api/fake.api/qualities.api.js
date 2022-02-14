@@ -20,12 +20,12 @@ const qualities = {
         color: "danger"
     },
     handsome: {
-        _id: "67rdca3eeb7f6fgeed471102",
+        _id: "67rdca3eeb7f6fgeed471101",
         name: "Красавчик",
         color: "info"
     },
     uncertain: {
-        _id: "67rdca3eeb7f6fgeed471103",
+        _id: "67rdca3eeb7f6fgeed471102",
         name: "Неуверенный",
         color: "dark"
     }
